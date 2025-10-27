@@ -11,3 +11,7 @@ html/*
 *.resolved
 
 .vs/
+
+.vscode/
+
+.venv/

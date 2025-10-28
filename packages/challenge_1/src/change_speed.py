@@ -9,7 +9,7 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
     def __init__(self, node_name):
         self.debug_prints = True
         self.strt_msg = True
-        self.node_freq = 5
+        self.node_freq = 10
 
         if self.debug_prints:
             rospy.loginfo(f"[CHANGE_SPEED]: Initializing node.")
@@ -19,8 +19,9 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
 
         # === Subscriber ===
         # Subscribes the topic with the pressed key
-        pressed_key_topic = f"/{self._vehicle_name}/challenge_1/pressed_key"
-        rospy.Subscriber(pressed_key_topic, String, self.cbKeyPressed, queue_size=1)
+        pressed_key_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_speed"
+        self.last_pressedKeySpeed = ""
+        rospy.Subscriber(pressed_key_topic, String, self.cbKeyPressedSpeed, queue_size=1)
 
         # === Publisher ===
         # Publishes the topic with the desired speed
@@ -30,12 +31,12 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
         # === Driving parameters ===
         # A dictionary to map key presses to speed values
         self.speed_levels = {
-            "[0]": 0.0,
-            "[1]": 0.2,
-            "[2]": 0.4,
-            "[3]": 0.6,
-            "[4]": 0.8,
-            "[5]": 1.0,
+            "0": 0.0,
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0,
         }
         self.pressedKey = "[2]"  # Currently pressed key
         self.v = self.speed_levels.get(self.pressedKey, 0.4) # Current velocity
@@ -46,8 +47,9 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
 
         
     ##### ===== CALLBACK FUNCTIONS OF SUBSCRIBERS ===== #####
-    def cbKeyPressed(self, msg: String):
-        self.pressedKey = msg.data
+    def cbKeyPressedSpeed(self, msg: String):
+        # Entferne eckige Klammern, falls vorhanden
+        self.pressedKey = msg.data.strip("[]")
         if self.debug_prints:
             rospy.loginfo(f"[CHANGE_SPEED]: Key pressed: {self.pressedKey}")
 

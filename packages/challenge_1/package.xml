@@ -1,5 +1,5 @@
 <package>
-  <name>Challenge_1</name>
+  <name>challenge_1</name>
   <version>0.0.1</version>
   <description>
   My first Catkin package in Duckietown.

@@ -19,23 +19,23 @@ class ReadKeyNode(DTROS):
         super(ReadKeyNode, self).__init__(node_name=node_name, node_type=NodeType.GENERIC)
         self._vehicle_name = os.environ['VEHICLE_NAME']
 
-        # === Publisher (Veroeffentlicher) ===
-        # Veroeffentlicht das Topic mit der gedrueckten Taste fuer die Geschwindigkeit (Zahlen)
+        # === Publisher ===
+        # Publishes the topic with the pressed key for speed (numbers)
         pressed_key_speed_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_speed"
         self.pub_key_speed = rospy.Publisher(pressed_key_speed_topic, String, queue_size=1)
-        # Veroeffentlicht das Topic mit der gedrueckten Taste fuer die lineare Geschwindigkeit (up/down)
+        # Publishes the topic with the pressed key for linear velocity (up/down)
         pressed_key_v_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_v"
         self.pub_key_v = rospy.Publisher(pressed_key_v_topic, String, queue_size=1)
-        # Veroeffentlicht das Topic mit der gedrueckten Taste fuer die Winkelgeschwindigkeit (left/right)
+        # Publishes the topic with the pressed key for angular velocity (left/right)
         pressed_key_omega_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_omega"
         self.pub_key_omega = rospy.Publisher(pressed_key_omega_topic, String, queue_size=1)
 
-        # === Pygame-Initialisierung ===
-        pygame.init() # Pygame muss initialisiert sein, um gedrueckte Tasten zu lesen
-        self.screen = pygame.display.set_mode((100, 100)) # Kleines, nicht sichtbares Fenster
-        pygame.display.set_caption("Keyboard reading") # Titel
+        # === Pygame initialisation ===
+        pygame.init() # Pygame must be initialized to read pressed keys
+        self.screen = pygame.display.set_mode((100, 100)) # Small, not visible window
+        pygame.display.set_caption("Keyboard reading") # Title
 
-        # === Shutdown-Registrierung ===
+        # === Register Shutdown-ToDos ===
         self.running = True
         rospy.on_shutdown(self.fnShutDown)
 
@@ -66,9 +66,9 @@ class ReadKeyNode(DTROS):
             self.strt_msg = False
 
         while self.running and not rospy.is_shutdown():
-            # --- Pygame-Ereignisverarbeitung ---
+            # --- Pygame event processing ---
             for event in pygame.event.get():
-                # Wenn das Fenster geschlossen wird
+                # If the window is closed
                 if event.type == pygame.QUIT:
                     self.running = False
                     if self.debug_prints:
@@ -85,30 +85,29 @@ class ReadKeyNode(DTROS):
                         if self.debug_prints:
                             rospy.loginfo("[READ_KEY]: ESC pressed. Shutting down.")
                     else:
-                        # Mappe Tasten auf die passenden Publisher
+                        # Map keys to the correct publishers
                         if event.key in (pygame.K_UP, pygame.K_DOWN):
-                            # veroeffentliche up/down auf dem v-Topic
+                            # publish up/down on v topic
                             self.pub_key_v.publish(String(data=key_name))
                         elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
-                            # veroeffentliche left/right auf dem omega-Topic
+                            # publish left/right on omega topic
                             self.pub_key_omega.publish(String(data=key_name))
                         else:
-                            # veroeffentliche Zifferntasten auf dem speed-Topic (Zahlen)
-                            # pygame.key.name(event.key) liefert '1','2',... fuer Zahlentasten
+                            # publish digit keys on speed topic (numbers)
+                            # pygame.key.name(event.key) returns '1','2',... for number keys
                             if key_name.isdigit():
                                 self.pub_key_speed.publish(String(data=key_name))
                             else:
-                                # andere Tasten werden ignoriert (oder hier erweitern, falls noetig)
+                                # other keys are ignored (or extend here if needed)
                                 pass
 
-                # Wenn eine Taste losgelassen wird
+                # When a key is released
                 elif event.type == pygame.KEYUP:
                     key_name = pygame.key.name(event.key)
                     if self.debug_prints:
                         rospy.loginfo(f"[READ_KEY]: Key up: {key_name}")
 
-                    # Sende einen leeren String, um zu signalisieren, dass die Taste
-                    # nicht mehr gedrueckt ist
+                    # Publish an empty string to signal that the specific key is no longer pressed
                     if event.key in (pygame.K_UP, pygame.K_DOWN):
                         self.pub_key_v.publish(String(data=""))
                     elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
@@ -116,10 +115,10 @@ class ReadKeyNode(DTROS):
                     elif key_name.isdigit():
                         self.pub_key_speed.publish(String(data=""))
                     else:
-                        # andere Tasten werden ignoriert
+                        # other keys ignored
                         pass
 
-            # Wenn `running` auf False gesetzt wurde, fuehre ein ROS-Shutdown aus
+            # If running is set to False, initiate a ROS shutdown
             if not self.running:
                 rospy.signal_shutdown("[READ_KEY]: Requested shutdown.")
 

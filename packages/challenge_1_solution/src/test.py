@@ -1,21 +1,21 @@
 import pygame
 
-# === Pygame-Initialisierung ===
-pygame.init() # Pygame muss initialisiert sein, um gedrueckte Tasten lesen zu koennen
-screen = pygame.display.set_mode((100, 100)) # Kleines, nicht sichtbares Fenster
-pygame.display.set_caption("Keyboard reading") # Titel
+# === Pygame initialisation ===
+pygame.init() # Pygame must be initialized to read pressed keys
+screen = pygame.display.set_mode((100, 100)) # Small, not visible window
+pygame.display.set_caption("Keyboard reading") # Title
 
 running = True
 
 while running:
-    # --- Pygame-Ereignisverarbeitung ---
+    # --- Pygame event processing ---
     for event in pygame.event.get():
-        # Wenn das Fenster geschlossen wird
+        # If the window is closed
         if event.type == pygame.QUIT:
             running = False
             print(f"[TEST]: Pygame window closed. Shutting down.")
 
-        # Wenn eine Taste gedrueckt wird
+        # When a key is pressed
         elif event.type == pygame.KEYDOWN:
             key_name = pygame.key.name(event.key)
             print(f"[TEST]: Key down: {key_name}; {type(key_name)}")
@@ -24,7 +24,7 @@ while running:
                 running = False
                 print(f"[TEST]: ESC pressed. Shutting down.")
 
-        # Wenn eine Taste losgelassen wird
+        # When a key is released
         elif event.type == pygame.KEYUP:
             key_name = pygame.key.name(event.key)
             print(f"[TEST]: Key up: {key_name}")

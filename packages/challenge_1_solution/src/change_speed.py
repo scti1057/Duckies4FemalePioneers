@@ -17,19 +17,19 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
         super(ChangeSpeedNode, self).__init__(node_name=node_name, node_type=NodeType.GENERIC)
         self._vehicle_name = os.environ['VEHICLE_NAME']
 
-        # === Abonnent (Subscriber) ===
-        # Abonniert das Topic mit der gedrueckten Taste
+        # === Subscriber ===
+        # Subscribes the topic with the pressed key
         pressed_key_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_speed"
         self.last_pressedKeySpeed = ""
         rospy.Subscriber(pressed_key_topic, String, self.cbKeyPressedSpeed, queue_size=1)
 
-        # === Publisher (Veroeffentlicher) ===
-        # Veroeffentlicht das Topic mit der gewuenschten Geschwindigkeit
+        # === Publisher ===
+        # Publishes the topic with the desired speed
         speed_topic = f"/{self._vehicle_name}/challenge_1/speed"
         self.pub_speed = rospy.Publisher(speed_topic, Float32, queue_size=1)
 
-        # === Fahrparameter ===
-        # Ein Dictionary, um Tastendruecke auf Geschwindigkeitswerte abzubilden
+        # === Driving parameters ===
+        # A dictionary to map key presses to speed values
         self.speed_levels = {
             "0": 0.0,
             "1": 0.2,
@@ -38,15 +38,15 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
             "4": 0.8,
             "5": 1.0,
         }
-        self.pressedKey = "[2]"  # Aktuell gedrueckte Taste
-        self.v = self.speed_levels.get(self.pressedKey, 0.4) # Aktuelle Geschwindigkeit
+        self.pressedKey = "[2]"  # Currently pressed key
+        self.v = self.speed_levels.get(self.pressedKey, 0.4) # Current velocity
 
-        # === Shutdown-Registrierung ===
+        # === Register Shutdown-ToDos ===
         rospy.on_shutdown(self.fnShutDown)
 
 
         
-    ##### ===== CALLBACK-FUNKTIONEN DER ABONNENTEN ===== #####
+    ##### ===== CALLBACK FUNCTIONS OF SUBSCRIBERS ===== #####
     def cbKeyPressedSpeed(self, msg: String):
         # Entferne eckige Klammern, falls vorhanden
         self.pressedKey = msg.data.strip("[]")
@@ -55,7 +55,7 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
 
 
 
-    ##### ===== ANDERE FUNKTIONEN ===== #####
+    ##### ===== OTHER FUNCTIONS ===== #####
     def fnShutDown(self):
         '''
         Called on shutdown to ensure vehicle stops
@@ -65,7 +65,7 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
 
 
 
-    ##### ========== HAUPTLAUF-FUNKTION ========== #####
+    ##### ========== MAIN RUN FUNCTION ========== #####
     def run(self):
         '''
         Main run function. Runs the parking state machine in a loop.
@@ -76,25 +76,14 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
             rospy.loginfo("[CHANGE_SPEED]: Speed control active.")
             self.strt_msg = False
 
-        last_published_v = -1.0 # Initialisiere mit einem Wert, den v nicht haben wird
+        last_published_v = -1.0 # Initialize with a value that v will not have
 
         while not rospy.is_shutdown():
-            # --- Verarbeitung der gedrueckten Taste ---
-            # Schlage die Geschwindigkeit im Dictionary nach. Wenn die Taste
-            # nicht gefunden wird, bleibt die bisherige Geschwindigkeit erhalten.
-            #####################################################################
-            # TODO Aufgabe 5:                                                   #
-            # Geschwindigkeit der gedrueckten Taste zuordnen                    #
-            # Wert veroeffentlichen (publish)                                   #
-            #                                                                   #
-            # Tipp: Oben ist bereits ein Dictionary definiert                     #
-            # Tipp: Oben ist bereits ein Publisher angelegt                      #
-            #####################################################################
-            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
-
-
-            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
-            #####################################################################
+            # --- Pressed key processing ---
+            # Look up the speed in the dictionary. If the key is not found, keep the current speed.
+            self.v = self.speed_levels.get(self.pressedKey, self.v)
+            # --- Create and publish the control command ---
+            self.pub_speed.publish(self.v)
 
             if self.debug_prints and self.v != last_published_v:
                 rospy.loginfo(f"[CHANGE_SPEED]: Publishing speed: {self.v:.2f}")

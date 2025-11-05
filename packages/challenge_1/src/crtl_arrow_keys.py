@@ -18,60 +18,92 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
         super(RemoteControlNode, self).__init__(node_name=node_name, node_type=NodeType.GENERIC)
         self._vehicle_name = os.environ['VEHICLE_NAME']
 
-        # === Subscriber ===
-        # Subscribes the topic with the pressed up/down key
+        # === Abonnent (Subscriber) ===
+        # Abonniert das Topic mit der gedrueckten up/down-Taste
         pressed_key_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_v"
         self.last_pressedKeyV = ""
         rospy.Subscriber(pressed_key_topic, String, self.cbKeyPressedV, queue_size=1)
-        # Subscribes the topic with the pressed left/right key
+        # Abonniert das Topic mit der gedrueckten left/right-Taste
         pressed_key_topic = f"/{self._vehicle_name}/challenge_1/pressed_key_omega"
         self.last_pressedKeyOmega = ""
         rospy.Subscriber(pressed_key_topic, String, self.cbKeyPressedOmega, queue_size=1)
-        # Subscribes  the topic with the desired speed
+        # Abonniert das Topic mit der gewuenschten Geschwindigkeit
         speed_topic = f"/{self._vehicle_name}/challenge_1/speed"
         rospy.Subscriber(speed_topic, Float32, self.cbSpeed, queue_size=1)
 
-        # === Publisher ===
-        # Sends control commands to SwitchControlNode
+        # === Publisher (Veroeffentlicher) ===
+        # Sendet Steuerbefehle an SwitchControlNode
         lane_cmd_topic = f"/{self._vehicle_name}/car_cmd_switch_node/cmd"
         self.pub_lane_twist = rospy.Publisher(lane_cmd_topic, Twist2DStamped, queue_size=1)
 
-        # === Driving parameters ===
-        self.pressedKey_v = "" # Pressed key
+        # === Fahrparameter ===
+        self.pressedKey_v = ""  # Gedrueckte Taste
         self.pressedKey_omega = ""
         self.last_speed = -1
-        self.v = 0.0  # Linear velocity
-        self.omega = 0.0  # Angular velocity
-        self.speed = 0.4 # Max linear speed
-        self.turn_speed = 6.0  # Max angular speed
-        self.damping_factor = 0  # How quickly it slows down (higher = slower braking)
-        self.acceleration_factor = 0.1  # How quickly it speeds up (lower = smoother acceleration)
+        self.v = 0.0  # Lineare Geschwindigkeit
+        self.omega = 0.0  # Winkelgeschwindigkeit
+        self.speed = 0.4  # Maximale lineare Geschwindigkeit
+        self.turn_speed = 6.0  # Maximale Winkelgeschwindigkeit
+        self.damping_factor = 0  # Wie schnell es abbremst (hoeher = langsameres Bremsen)
+        self.acceleration_factor = 0.1  # Wie schnell es beschleunigt (kleiner = sanftere Beschleunigung)
 
-        # === Register Shutdown-ToDos ===
+        # === Shutdown-Registrierung ===
         rospy.on_shutdown(self.fnShutDown)
 
 
         
-    ##### ===== CALLBACK FUNCTIONS OF SUBSCRIBERS ===== #####
+    ##### ===== CALLBACK-FUNKTIONEN DER ABONNENTEN ===== #####
     def cbKeyPressedV(self, msg: String):
         self.pressedKey_v = msg.data
         if (self.pressedKey_v != self.last_pressedKeyV) and self.debug_prints:
-            rospy.loginfo(f"[CRTL_ARROW_KEYS]: Key pressed v: {self.pressedKey_v}")
+            #####################################################################
+            # TODO Aufgabe 3.1:                                                 #
+            # Ausgabe, welche Taste gedrueckt wurde                              #
+            #                                                                   #
+            # Tipp: Hier geht es um vorwaerts / rueckwaerts fahren               #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+
+
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
+            None
 
     def cbKeyPressedOmega(self, msg: String):
         self.pressedKey_omega = msg.data
         if (self.pressedKey_omega != self.last_pressedKeyOmega) and self.debug_prints:
-            rospy.loginfo(f"[CRTL_ARROW_KEYS]: Key pressed v: {self.pressedKey_omega}")
+            #####################################################################
+            # TODO Aufgabe 3.2:                                                 #
+            # Ausgabe, welche Taste gedrueckt wurde                              #
+            #                                                                   #
+            # Tipp: Hier geht es um links / rechts Kurven fahren                 #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+
+
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
+            None
     
     def cbSpeed(self, msg: Float32):
         self.speed = msg.data
         if (self.speed != self.last_speed) and self.debug_prints:
-            rospy.loginfo(f"[CRTL_ARROW_KEYS]: Speed set to: {self.speed}")
-            self.last_speed = self.speed
+            #####################################################################
+            # TODO Aufgabe 3.3:                                                 #
+            # Ausgabe, welche Taste gedrueckt wurde                              #
+            #                                                                   #
+            # Tipp: Hier geht es um die eingestellte Geschwindigkeit            #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+
+
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
+            None
 
 
 
-    ##### ===== OTHER FUNCTIONS ===== #####
+    ##### ===== ANDERE FUNKTIONEN ===== #####
     def fnShutDown(self):
         '''
         Called on shutdown to ensure vehicle stops
@@ -86,7 +118,7 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
 
 
 
-    ##### ========== MAIN RUN FUNCTION ========== #####
+    ##### ========== HAUPTLAUF-FUNKTION ========== #####
     def run(self):
         '''
         Main run function. Runs the parking state machine in a loop.
@@ -101,41 +133,55 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
         target_omega = 0.0
 
         while not rospy.is_shutdown():
-            # --- Pressed key processing ---
-            # Handle linear velocity (v)
-            if self.pressedKey_v in ["space", "up", "down"]:
-                if self.pressedKey_v == "space":
-                    target_v = 0.0
-                    self.v = 0.0
-                elif self.pressedKey_v == "up":
-                    target_v = self.speed
-                elif self.pressedKey_v == "down":
-                    target_v = -self.speed
-            else:
-                # No movement key for linear velocity is pressed
-                target_v = 0.0
+            # --- Verarbeitung gedrueckter Tasten ---
+            # Verarbeitung lineare Geschwindigkeit (v)
+            #####################################################################
+            # TODO Aufgabe 1:                                                   #
+            # vorwaerts fahren      (Taste "up")                                #
+            # rueckwaerts fahren    (Taste "down")                              #
+            # bei Leertaste Stopp    (Taste "space")                            #
+            #                                                                   #
+            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?    #
+            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?            #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
-            # Handle angular velocity (omega)
-            if self.pressedKey_omega in ["space", "left", "right"]:
-                if self.pressedKey_omega == "space":
-                    target_omega = 0.0
-                    self.omega = 0.0
-                elif self.pressedKey_omega == "left":
-                    target_omega = self.turn_speed
-                elif self.pressedKey_omega == "right":
-                    target_omega = -self.turn_speed
-            else:
-                # No movement key for angular velocity is pressed
-                target_omega = 0.0
 
-            # --- Smoothly interpolate to the target speed and omega ---
-            # If the target is to move, accelerate towards it
-            if target_v != 0:
-                self.v += (target_v - self.v) * self.acceleration_factor
-            else: # If the target is to stop, apply damping
-                self.v *= self.damping_factor
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
 
-            # Set to zero if very close to zero to prevent drifting
+            # Verarbeitung Winkelgeschwindigkeit (omega)
+            #####################################################################
+            # TODO Aufgabe 2:                                                   #
+            # Kurve links fahren   (Taste "up")                                 #
+            # Kurve rechts fahren  (Taste "down")                               #
+            # bei Leertaste Stopp    (Taste "space")                            #
+            #                                                                   #
+            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?    #
+            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?            #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+
+
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
+
+            # --- Sanftes Hochfahren/Abbremsen zu Zielwerten ---
+            #####################################################################
+            # TODO Aufgabe 4:                                                   #
+            # sanftes Anfahren                                                  #
+            # sanftes Abbremsen                                                 #
+            #                                                                   #
+            # Tipp: Es gibt bereits Variablen fuer den Beschleunigungsfaktor    #
+            # Tipp: Es gibt bereits Variablen fuer den Abbremsfaktor            #
+            #####################################################################
+            ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+
+
+            ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
+            #####################################################################
+
+            # Setze auf 0, wenn sehr nahe bei 0, um Drift zu verhindern
             if abs(self.v) < 1e-4:
                 self.v = 0.0
             if abs(self.omega) < 1e-4:
@@ -147,13 +193,13 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
             else:
                 self.omega = target_omega
                 
-            # --- Create and publish the control command ---
-            # Create a Twist2DStamped message
+            # --- Erzeuge und publiziere den Steuerbefehl ---
+            # Erzeuge eine Twist2DStamped-Nachricht
             twist_msg = Twist2DStamped()
             twist_msg.v = self.v
             twist_msg.omega = self.omega
             
-            # Publish the message
+            # Publiziere die Nachricht
             self.pub_lane_twist.publish(twist_msg)
 
             if self.debug_prints and (self.v != 0 or self.omega != 0):

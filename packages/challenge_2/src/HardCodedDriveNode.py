@@ -17,11 +17,12 @@ class ControlLaneNode(DTROS):
         self._vehicle_name = os.environ["VEHICLE_NAME"]
 
 
-        self.sub_ToF = rospy.Subscriber(f"/{self._vehicle_name}/front_center_tof_driver_node/range", Range, self.cb_ToF, queue_size=1)
+        # self.sub_ToF = rospy.Subscriber(f"/{self._vehicle_name}/front_center_tof_driver_node/range", Range, self.cb_ToF, queue_size=1)
 
         twist_topic = f"/{self._vehicle_name}/car_cmd_switch_node/cmd"
         self.pub_cmd_vel = rospy.Publisher(twist_topic, Twist2DStamped, queue_size=1)
 
+        self.drive()
         rospy.on_shutdown(self.fnShutDown)
 
     ##############################################################
@@ -31,19 +32,14 @@ class ControlLaneNode(DTROS):
 
 
     def drive(self,v , omega, drive_time):
-    ##############################################################
-    # Aufgabe 1:                                                 #
-    # Funktion zum erstellen eines Fahr commandos                #
-    ##############################################################
-        return
-
-
-    def HardCoded(self,):
     ##########################################################################
     # Aufgabe 1:                                                             #
-    # Funktion um die richtung und die Zeit für ein Fahrkommando vorzugeben  #
+    # Funktion zum erstellen eines Fahr commandos                            #
+    # Tipp: Zeiten verwenden um eine Gewisse Zeit in eine Richtung zu fahren #
+    # Tipp: 2 Funktionen verwenden                                           #
     ##########################################################################
         return
+
 
     def fnShutDown(self):
         rospy.loginfo("Shutting down. cmd_vel will be 0")

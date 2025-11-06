@@ -58,9 +58,9 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
         if (self.pressedKey_v != self.last_pressedKeyV) and self.debug_prints:
             #####################################################################
             # TODO Aufgabe 3.1:                                                 #
-            # Ausgabe, welche Taste gedrueckt wurde                              #
+            # Ausgabe, welche Taste gedrueckt wurde                             #
             #                                                                   #
-            # Tipp: Hier geht es um vorwaerts / rueckwaerts fahren               #
+            # Tipp: Hier geht es um vorwaerts / rueckwaerts fahren              #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
@@ -74,9 +74,9 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
         if (self.pressedKey_omega != self.last_pressedKeyOmega) and self.debug_prints:
             #####################################################################
             # TODO Aufgabe 3.2:                                                 #
-            # Ausgabe, welche Taste gedrueckt wurde                              #
+            # Ausgabe, welche Taste gedrueckt wurde                             #
             #                                                                   #
-            # Tipp: Hier geht es um links / rechts Kurven fahren                 #
+            # Tipp: Hier geht es um links / rechts Kurven fahren                #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
@@ -90,7 +90,7 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
         if (self.speed != self.last_speed) and self.debug_prints:
             #####################################################################
             # TODO Aufgabe 3.3:                                                 #
-            # Ausgabe, welche Taste gedrueckt wurde                              #
+            # Ausgabe, welche Taste gedrueckt wurde                             #
             #                                                                   #
             # Tipp: Hier geht es um die eingestellte Geschwindigkeit            #
             #####################################################################
@@ -141,8 +141,8 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
             # rueckwaerts fahren    (Taste "down")                              #
             # bei Leertaste Stopp    (Taste "space")                            #
             #                                                                   #
-            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?    #
-            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?            #
+            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?   #
+            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?           #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
@@ -153,12 +153,12 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
             # Verarbeitung Winkelgeschwindigkeit (omega)
             #####################################################################
             # TODO Aufgabe 2:                                                   #
-            # Kurve links fahren   (Taste "up")                                 #
-            # Kurve rechts fahren  (Taste "down")                               #
+            # Kurve links fahren   (Taste "left")                               #
+            # Kurve rechts fahren  (Taste "right")                              #
             # bei Leertaste Stopp    (Taste "space")                            #
             #                                                                   #
-            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?    #
-            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?            #
+            # Tipp: Was soll passieren, wenn keine Taste mehr gedrueckt wird?   #
+            # Tipp: Welche Taste soll die hoeherste Prioritaet haben?           #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 

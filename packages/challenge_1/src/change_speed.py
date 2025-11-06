@@ -87,8 +87,8 @@ class ChangeSpeedNode(DTROS): # Class name adjusted, inherits conditionally
             # Geschwindigkeit der gedrueckten Taste zuordnen                    #
             # Wert veroeffentlichen (publish)                                   #
             #                                                                   #
-            # Tipp: Oben ist bereits ein Dictionary definiert                     #
-            # Tipp: Oben ist bereits ein Publisher angelegt                      #
+            # Tipp: Oben ist bereits ein Dictionary definiert                   #
+            # Tipp: Oben ist bereits ein Publisher angelegt                     #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 

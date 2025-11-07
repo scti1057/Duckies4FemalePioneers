@@ -32,11 +32,11 @@ class ControlLaneNode(DTROS):
         rospy.on_shutdown(self.fnShutDown)
 
     #####################################################################
-    # TODO Aufgabe 2.3:                                                 #
-    # Implementiere eine Notfall-Stopp Funktion                        #
+    # TODO Aufgabe 3:                                                   #
+    # Implementiere eine Notfall-Stopp Funktion                         #
     #                                                                   #
-    # Tipp: Nutze die ToF-Sensordaten um Hindernisse zu erkennen      #
-    # Tipp: Setze v=0 und omega=0 wenn ein Objekt zu nah ist          #
+    # Tipp: Nutze die ToF-Sensordaten um Hindernisse zu erkennen        #
+    # Tipp: Setze v=0 und omega=0 wenn ein Objekt zu nah ist            #
     #####################################################################
     ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
@@ -53,11 +53,11 @@ class ControlLaneNode(DTROS):
         :param drive_time: Fahrzeit in Sekunden
         '''
         #####################################################################
-        # TODO Aufgabe 2.1:                                                 #
+        # TODO Aufgabe 1:                                                   #
         # Implementiere die Fahrlogik                                       #
         #                                                                   #
-        # Tipp: Erstelle ein Twist2DStamped Message                        #
-        # Tipp: Nutze time.sleep() fuer die Fahrzeit                       #
+        # Tipp: Erstelle ein Twist2DStamped Message                         #
+        # Tipp: Nutze time.sleep() fuer die Fahrzeit                        #
         #####################################################################
         ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 

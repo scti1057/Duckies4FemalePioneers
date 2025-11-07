@@ -34,9 +34,9 @@ class CameraNode(DTROS):
 
         #####################################################################
         # TODO Aufgabe 2.1:                                                 #
-        # Hier ToF (Time of Flight) Subscriber einfuegen                   #
+        # Hier ToF (Time of Flight) Subscriber einfuegen                    #
         #                                                                   #
-        # Tipp: Nutze den richtigen Message-Typ fuer ToF-Sensordaten      #
+        # Tipp: Nutze den richtigen Message-Typ fuer ToF-Sensordaten        #
         #####################################################################
         ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
@@ -49,15 +49,15 @@ class CameraNode(DTROS):
 
         #####################################################################
         # Vorprogrammierte Bildverarbeitung                                #
-        # - Konvertierung des komprimierten Bildes                        #
-        # - Frame-Zaehlung und Verarbeitung                               #
+        # - Konvertierung des komprimierten Bildes                         #
+        # - Frame-Zaehlung und Verarbeitung                                #
         #####################################################################
 
         #####################################################################
         # TODO Aufgabe 2.2:                                                 #
-        # ToF-Sensordaten im Kamerabild visualisieren                      #
+        # ToF-Sensordaten im Kamerabild visualisieren                       #
         #                                                                   #
-        # Tipp: Nutze cv2.putText um die Distanz anzuzeigen               #
+        # Tipp: Nutze cv2.putText um die Distanz anzuzeigen                 #
         #####################################################################
         ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 

@@ -176,7 +176,8 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
             # Tipp: Es gibt bereits Variablen fuer den Abbremsfaktor            #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
-
+            
+            self.v = target_v   # Nur als platzhalter --> Fragt Paul, Tim oder Felix
 
             ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
             #####################################################################

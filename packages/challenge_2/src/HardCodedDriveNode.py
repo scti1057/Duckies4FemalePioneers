@@ -31,7 +31,7 @@ class ControlLaneNode(DTROS):
     ##############################################################
 
 
-    def drive(self,v , omega, drive_time):
+    def drive(self,v=0 , omega=0, drive_time=0):
     ##########################################################################
     # Aufgabe 1:                                                             #
     # Funktion zum erstellen eines Fahr commandos                            #

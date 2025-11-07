@@ -43,44 +43,12 @@ class CameraNode(DTROS):
         ########################################
         # Vorprogrammieren                     #
         ########################################
-        if self.counter % self.Xth_frame != 0:
-            self.counter += 1
-            return
-        else:
-            self.counter += 1
-
-        try:
-            # ROS CompressedImage zu OpenCV-Bild
-            np_arr = np.frombuffer(image_msg.data, np.uint8)
-            cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-           
-            window_name = f"{self._vehicle_name} Camera"
-            # Beispieltext
-            text = f"{self._vehicle_name} Female Pioneers HKA 2025"
             
         ####################################################
         # Aufgabe 2:                                       #
         # hier ToF Daten im Bild anzeigen lassen           #
         ####################################################
-
-            # Text ins Bild einfügen (Position, Font, Größe, Farbe, Dicke)
-            cv2.putText(
-                cv_image,              # Bild
-                text,                  # Textinhalt
-                (20, 40),              # Position (x, y)
-                cv2.FONT_HERSHEY_SIMPLEX,  # Schriftart
-                1.0,                   # Schriftgröße
-                (0, 255, 0),           # Farbe (BGR) -> Grün
-                2,                     # Linienstärke
-                cv2.LINE_AA            # Kantenglättung (Antialiasing)
-            )
-            cv2.imshow(window_name, cv_image)
-            cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-            cv2.resizeWindow(window_name, 640, 480)
-            cv2.waitKey(1)
-
-        except Exception as e:
-            rospy.logerr(f"[{self.node_name}] Fehler bei Bildverarbeitung: {e}")
+        return
 
     def on_shutdown(self):
         cv2.destroyAllWindows()

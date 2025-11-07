@@ -102,15 +102,9 @@ class CameraReaderNode(DTROS):
         ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> ####################
 
         # Mittelpunkt berechnen
+        print("right_lane_x:", right_lane_x, " left_lane_x:", left_lane_x)
         if right_lane_x is not None and left_lane_x is not None and right_lane_x > left_lane_x:
-            print("both_lanes","right_lane_x:", right_lane_x, " left_lane_x:", left_lane_x)
-            return ((right_lane_x + left_lane_x) / 2 - 30)
-        elif left_lane_x is not None:
-            print("only_left_lane"," left_lane_x:", left_lane_x)
-            return left_lane_x + 170
-        elif right_lane_x is not None:
-            print("only_right_lane"," right_lane_x:", right_lane_x)
-            return right_lane_x - 230
+            return 300
         else:
             return None
 
@@ -168,10 +162,10 @@ class CameraReaderNode(DTROS):
                 ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
 
                 # Zielpunkt zeichnen
-                cv2.circle(image, (smoothed_x, target_y), 6, (255, 0, 255), -1)
+                
+                
                 # Text für Zielpunkt
-                cv2.putText(image, "Ziel", (smoothed_x - 20, target_y - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 1)
+                
 
                 ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############
                 #####################################################################
@@ -179,7 +173,7 @@ class CameraReaderNode(DTROS):
 
                 # publish target midpoint (zum fahren smothed_x publishen also # entfernen)
                 #####################################################################
-                self.pub_lane_x.publish(Float64(smoothed_x))
+                # self.pub_lane_x.publish(Float64(smoothed_x))
                 #####################################################################
                 
                 

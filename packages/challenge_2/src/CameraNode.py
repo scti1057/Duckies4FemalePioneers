@@ -52,6 +52,22 @@ class CameraNode(DTROS):
         # - Konvertierung des komprimierten Bildes                         #
         # - Frame-Zaehlung und Verarbeitung                                #
         #####################################################################
+        try:
+            np_arr = np.frombuffer(image_msg.data, np.uint8)
+            
+            cv_image= cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+            window_name = f"{self._vehicle_name} Camera"
+
+            text = f"{self._vehicle_name} Female Pioneers HKA 2025"
+
+            cv2.putText(cv_image, text, (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0))
+
+            cv2.imshow(window_name, cv_image)
+            cv2.resizeWindow(window_name, 640, 480)
+            cv2.waitKey(1)
+        except: 
+            return
 
         #####################################################################
         # TODO Aufgabe 2.2:                                                 #

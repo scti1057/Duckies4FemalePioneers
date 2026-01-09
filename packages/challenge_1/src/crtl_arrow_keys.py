@@ -145,6 +145,11 @@ class RemoteControlNode(DTROS): # Class name adjusted, inherits conditionally
             # Tipp: Welche Taste soll die hoeherste Prioritaet haben?           #
             #####################################################################
             ############# >>>>>>>>>> HIER CODE EINFUEGEN >>>>>>>>>> #############
+            if self.pressedKey_v == "up":
+                target_v = self.speed
+            else:
+                target_v = 0.0
+
 
 
             ############# <<<<<<<<<< HIER CODE EINFUEGEN <<<<<<<<<< #############

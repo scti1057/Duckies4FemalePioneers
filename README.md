@@ -1,6 +1,6 @@
 # HKA Robogistics DuckieRace: Female Pioneers Workshop
 
-**Group QuackSquad** **Maintainers:** Paul Glaser, Tim Schäfer, Felix Wietschel  
+**Maintainers:** Paul Glaser, Tim Schäfer, Felix Wietschel  
 **Repository:** `HKA_Robogistics_DuckieRace`
 
 ## 📖 Introduction

@@ -68,8 +68,10 @@ The workshop is structured into specific challenges. You will modify the Python 
 
 **Goal:** Use the camera to detect lanes and drive autonomously.
 
-* **File to Edit:** (Refer to instructor guidelines for Challenge 3 specific files).
-* **Context:** This utilizes the `followlane` package and may involve calibration.
+* **File to Edit:** `packages/challenge_3/src/camera_reader_node.py`
+* **Tasks:**
+    1. Draw a circle with text to specify the target location "smoothed_x".
+    2. Calculate the target x value based on the detected lines representing the path.
 
 ---
 
